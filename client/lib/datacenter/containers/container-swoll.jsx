@@ -1,5 +1,6 @@
 import React from "react";
 import h from "../../helpers";
+import ListSubheader from '@material-ui/core/ListSubheader';
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
@@ -7,6 +8,7 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Radio from "@material-ui/core/Radio";
 import MyResponsiveLine from "../../../shared/nivo-databiz/line";
+import mappings from "./mappings";
 
 class ContainerSwoll extends React.Component {
 
@@ -115,6 +117,26 @@ class ContainerSwoll extends React.Component {
   render() {
     let data = this.state.plot;
 
+    let catOpt = Object.keys(mappings).map((classKey) => {
+      let categories = Object.keys(mappings);
+      let options = Object.keys(mappings[classKey]);
+
+      categories.map((cat) => {
+        options.map((opt, i) => {
+          console.log(cat, "and", opt);
+          return (
+            <>
+            <ListSubheader>{cat}</ListSubheader>
+            // <MenuItem value={i}>{cat[opt]}</MenuItem>
+            </>
+          );
+          return false;
+        });
+        return false;
+      });
+      return false;
+    });
+
     let classOptions = this.state.kind === "classifications" ?
       <FormControl className="s-options">
         <Select value={this.state.type} onChange={(e) => this.handleSelectChange(e)}>
@@ -122,6 +144,12 @@ class ContainerSwoll extends React.Component {
           <MenuItem value={"errors"}>Errors</MenuItem>
         </Select>
       </FormControl>
+      : this.state.kind === "syscalls" ?
+      <FormControl className="s-options">
+        <Select value="">
+          {catOpt}
+        </Select>
+      </FormControl> 
       : "";
 
     return (
